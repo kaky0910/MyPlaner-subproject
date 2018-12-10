@@ -9,7 +9,6 @@ async function addDailyStatics(){
       getChallengeByMonth(arr[i],insertChallengeStatics);
     }
   });
-
 }
 
 function getAllMembers(callback){
@@ -74,7 +73,7 @@ function insertChallengeStatics(r){
         return;
       }
       connection.execute(
-        `INSERT INTO member_statics_per_day(member_no, day, rate_of_challenge_per_day) VALUES (${r[0]},${r[1]},${r[2]})`,
+        `INSERT INTO member_statics_per_day(member_no, day, rate_of_challenge_per_day,total_challenge_content) VALUES (${r[0]},TO_DATE(${r[1]},'YYYYMMDD'),${r[2]},${r[3]})`,
         [],
         function(err,result){
           if (err) {
@@ -104,6 +103,7 @@ function convert(arr){
     if(arr[i][dayCount]==1) count++;
   }
   result.push(count*100/length);
+  result.push(length);
   return result;
 }
 
