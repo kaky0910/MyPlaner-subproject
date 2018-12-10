@@ -5,7 +5,7 @@ oracledb.autoCommit = true;
 async function addDailyStatics(){
   getAllMembers(function(arr){
     for(i=0; i<arr.length;i++){
-      getChallengeByMonth(arr[i],insertChallengeStatics);
+      getChallengeByMonth(arr[i],insertChallengeStatics); 
     }
   });
 }
