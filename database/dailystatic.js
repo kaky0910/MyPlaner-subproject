@@ -1,5 +1,4 @@
 const oracledb = require('oracledb');
-const dbconfig = require('./config/dbconfig');
 const moment = require('moment');
 oracledb.autoCommit = true;
 
@@ -46,7 +45,7 @@ function getChallengeByMonth (memberNo,callback) {
             `SELECT member_no, challenge.challenge_no, challenge_title, challenge_content, challenge_content_check, ceil((sysdate - challenge_start_date))
              FROM challenge, challenge_content
              WHERE member_no=${memberNo} 
-             AND (to_date(${day}) BETWEEN challenge_start_date AND challenge_end_date) 
+             AND (to_date('${day}','YYYYMMDD') BETWEEN challenge_start_date AND challenge_end_date) 
              AND challenge.challenge_no = challenge_content.challenge_no`,
             [],  // bind value for :id
             function(err, result) {
