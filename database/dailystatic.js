@@ -1,5 +1,6 @@
 const oracledb = require('oracledb');
 const moment = require('moment');
+const dbconfig = require('./config/dbconfig');
 oracledb.autoCommit = true;
 
 async function addDailyStatics(){
@@ -80,6 +81,7 @@ function insertChallengeStatics(r){
             return;
           }
           console.log("성공~");
+	  doRelease(connection);
         })
       });
   };
@@ -93,7 +95,7 @@ function doRelease(connection) {
 function convert(arr){
   var result = [];
   result.push(arr[0][0]);
-  result.push(moment().subtract('days',-1).format('YYYYMMDD'));
+  result.push(moment().subtract('days',1).format('YYYYMMDD'));
   var length = arr.length;
   var count = 0;
   var dayCount;
