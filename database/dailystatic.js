@@ -6,7 +6,7 @@ oracledb.autoCommit = true;
 async function addDailyStatics(){
   getAllMembers(function(arr){
     for(i=0; i<arr.length;i++){
-      getChallengeByMonth(arr[i],insertChallengeStatics); 
+      getChallengeByMonth(arr[i],insertChallengeStatics);
     }
   });
 }
@@ -81,7 +81,8 @@ function insertChallengeStatics(r){
             return;
           }
           console.log("성공~");
-	  doRelease(connection);
+	        doRelease(connection);
+
         })
       });
   };
@@ -108,9 +109,37 @@ function convert(arr){
   return result;
 }
 
+function updateChallengeDayCount(){
+  var day = moment().format('YYYYMMDD');
+  oracledb.getConnection(
+    dbconfig.config,
+    function(err, connection) {
+      if (err) {
+        console.error(err.message);
+        return;
+      }
+      connection.execute(           //challenge_no, challenge_title, challenge_start_date
+        `UPDATE challenge 
+        SET day_count = day_count+1
+        WHERE TO_DATE(${day},'YYYYMMDD') BETWEEN challenge_start_date AND challenge_end_date`,
+        [], 
+        function(err, result) {
+          if (err) {
+            console.error(err.message);
+            doRelease(connection);
+            return;
+          }
+          console.log("update complete ::: "+result);
+          doRelease(connection);
+          ///////////////////////////////////////
+        });
+    });
+}
 
 module.exports = {
     getChallengeByMonth,
     getAllMembers,
-    addDailyStatics
+    addDailyStatics,
+    updateChallengeDayCount
 }
+
