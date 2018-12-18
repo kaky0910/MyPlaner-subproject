@@ -80,7 +80,7 @@ function insertChallengeStatics(r){
             console.error(err.message);
             return;
           }
-          console.log("성공~");
+          console.log("성공~ day :: "+r[1]+"  rate :: "+r[2]);
 	        doRelease(connection);
 
         })
@@ -102,7 +102,7 @@ function convert(arr){
   var dayCount;
   for(i=0; i<length;i++){
     dayCount = arr[i][5];
-    if(arr[i][dayCount-1]==1) count++;
+    if(arr[i][4][dayCount-1]==1) count++;
   }
   result.push(count*100/length);
   result.push(length);
