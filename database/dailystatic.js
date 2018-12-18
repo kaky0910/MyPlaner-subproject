@@ -102,7 +102,7 @@ function convert(arr){
   var dayCount;
   for(i=0; i<length;i++){
     dayCount = arr[i][5];
-    if(arr[i][dayCount]==1) count++;
+    if(arr[i][dayCount-1]==1) count++;
   }
   result.push(count*100/length);
   result.push(length);
@@ -137,8 +137,6 @@ function updateChallengeDayCount(){
 }
 
 module.exports = {
-    getChallengeByMonth,
-    getAllMembers,
     addDailyStatics,
     updateChallengeDayCount
 }
